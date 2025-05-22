@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Sepetim";
+}
+
+@model List<CartItem>
+
+<h2>Sepetiniz</h2>
+
+@if (!Model.Any())
+{
+    <p>Sepetiniz Boş</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Bilgisayar</th>
+                <th>Resim</th>
+                <th>Adet  </th>
+                <th>Birim Fiyat</th>
+                <th>Toplam Fiyat</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.computer_.Name</td>
+                    <td><img src="@item.computer_.ImageUrl" style="height:50px" />  </td>
+                    <td>@item.Qunatity
+
+                        <form asp-action="UrunMiktariArttir" method="post">
+                            <input type="hidden" name="ComputerId" value="@item.computer_.Id" />
+                            <button type="submit" class="btn btn-success">+</button>
+                        </form>
+
+                      @*   <form asp-action="UrunMiktariAzalt" method="post">
+                            <input type="hidden" name="ComputerId" value="@item.computer_.Id" />
+                            <button type="submit" class="btn btn-danger">-</button>
+                        </form> *@
+
+                        <a href="../Home/UrunMiktariAzalt?ComputerId=@item.computer_.Id" class="btn btn-danger">-</a>
+                         
+                    
+                    </td>
+                    <td>@item.computer_.Price.ToString("C")</td>
+                    <td>@(@item.computer_.Price * @item.Qunatity).ToString("C")  </td>
+                    <td>
+                        <form asp-action="SepettenCikar" method="post">
+                            <input type="hidden" name="ComputerId" value="@item.computer_.Id" />
+                            <button type="submit" class="btn btn-danger">Sepetten Çıkar</button>
+                        </form>
+                    </td>
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-action="Index">Alışverişe Devam Et</a>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+@model List<Computer>
+<div class="container">
+    <h2>Bilgisayarlar</h2>
+    <div class="row">
+
+        @foreach (var pc in Model)
+        {
+            <div class="col-4" style="border:1px solid #ccc;padding:10px;margin:10px">
+                <img src="@pc.ImageUrl" width="250" />
+                <h3> @pc.Name </h3>
+                <p> @pc.Description </p>
+                <strong> @pc.Price.ToString("C") </strong>
+                <form asp-action="AddToCart" method="post">
+                    <input type="hidden" name="id" value="@pc.Id" />
+                    <button type="submit" class="btn btn-info">Sepete Ekle</button>
+                </form>
+
+            </div>
+
+        }
+    </div>
+</div>
+
+
+
